@@ -19,8 +19,8 @@ public:
     virtual bool append(T element);
     virtual bool insert(size_T index, T element) = 0;
 
-    virtual T remove(size_T index) = 0;
-    virtual bool remove(T& element) = 0;
+    virtual T removeAt(size_T index) = 0;
+    virtual bool remove(const T& element) = 0;
 
     virtual size_T length() const = 0;
 };

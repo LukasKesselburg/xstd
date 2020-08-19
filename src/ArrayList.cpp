@@ -1,11 +1,13 @@
 #include "ArrayList.hpp"
 #include <iostream>
 #include <stdexcept>
+#include <cstring>
 using std::cout;
 using std::endl;
 using std::initializer_list;
 using std::ostream;
 using std::string;
+using std::memcpy;
 
 template <typename T>
 ArrayList<T>::ArrayList() : _length(0), _capacity(10)
@@ -30,7 +32,7 @@ ArrayList<T>::ArrayList(const initializer_list<T> &list) : _length(0), _capacity
 }
 
 template <typename T>
-ArrayList<T>::ArrayList(ArrayList<T> &list) : _length(list._length), _capacity(list._capacity)
+ArrayList<T>::ArrayList(const ArrayList<T> &list) : _length(list._length), _capacity(list._capacity)
 {
     this->arr = new T[this->_capacity];
     for (size_T i = 0; i < this->_length; i++)
@@ -84,7 +86,7 @@ bool ArrayList<T>::insert(size_T index, T element)
 }
 
 template <typename T>
-T ArrayList<T>::remove(size_T index)
+T ArrayList<T>::removeAt(size_T index)
 {
     this->checkIndexRange(index);
     T res = this->arr[index];
@@ -99,13 +101,13 @@ T ArrayList<T>::remove(size_T index)
 }
 
 template <typename T>
-bool ArrayList<T>::remove(T &element)
+bool ArrayList<T>::remove(const T &element)
 {
     for (size_t i = 0; i < this->_length; i++)
     {
         if (this->arr[i] == element)
         {
-            this->remove(i);
+            this->removeAt(i);
             return true;
         }
     }

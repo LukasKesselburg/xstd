@@ -19,19 +19,19 @@ public:
     ArrayList(size_T capacity);
     ArrayList(const initializer_list<T>& list);
     // ArrayList(List<T>& list);
-    ArrayList(ArrayList<T>& list);
+    ArrayList(const ArrayList<T>& list);
 
     virtual ~ArrayList();
 
-    virtual T &operator[](size_T index);
-    virtual T operator[](size_T index) const;
+    virtual T &operator[](size_T index) override;
+    virtual T operator[](size_T index) const override;
 
-    virtual bool insert(size_T index, T element);
+    virtual bool insert(size_T index, T element) override;
 
-    virtual T remove(size_T index);
-    virtual bool remove(T &element);
+    virtual T removeAt(size_T index) override;
+    virtual bool remove(const T &element) override;
 
-    virtual size_T length() const;
+    virtual size_T length() const override;
 
     size_T capacity() const;
 };
