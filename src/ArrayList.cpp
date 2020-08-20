@@ -5,24 +5,24 @@
 using std::cout;
 using std::endl;
 using std::initializer_list;
+using std::memcpy;
 using std::ostream;
 using std::string;
-using std::memcpy;
 
 template <typename T>
-ArrayList<T>::ArrayList() : _length(0), _capacity(10)
+ArrayList<T>::ArrayList() : List<T>(), _capacity(10)
 {
     this->arr = new T[this->_capacity];
 }
 
 template <typename T>
-ArrayList<T>::ArrayList(size_T capacity) : _length(0), _capacity(capacity)
+ArrayList<T>::ArrayList(size_T capacity) : List<T>(), _capacity(capacity)
 {
     this->arr = new T[this->_capacity];
 }
 
 template <typename T>
-ArrayList<T>::ArrayList(const initializer_list<T> &list) : _length(0), _capacity(2 * list.size())
+ArrayList<T>::ArrayList(const initializer_list<T> &list) : List<T>(), _capacity(2 * list.size())
 {
     this->arr = new T[this->_capacity];
     for (auto &x : list)
@@ -32,12 +32,22 @@ ArrayList<T>::ArrayList(const initializer_list<T> &list) : _length(0), _capacity
 }
 
 template <typename T>
-ArrayList<T>::ArrayList(const ArrayList<T> &list) : _length(list._length), _capacity(list._capacity)
+ArrayList<T>::ArrayList(const List<T> &list) : List<T>(), _capacity(2 * list.length())
 {
     this->arr = new T[this->_capacity];
-    for (size_T i = 0; i < this->_length; i++)
+    for (;this->_length < list.length(); this->_length++)
     {
-        this->arr[i] = list[i];
+        this->arr[this->_length] = list[this->_length];
+    }
+}
+
+template <typename T>
+ArrayList<T>::ArrayList(const ArrayList<T> &list) : List<T>(), _capacity(list._capacity)
+{
+    this->arr = new T[this->_capacity];
+    for (;this->_length < list.length(); this->_length++)
+    {
+        this->arr[this->_length] = list[this->_length];
     }
 }
 
@@ -73,6 +83,7 @@ bool ArrayList<T>::insert(size_T index, T element)
             n[i] = this->arr[i];
         }
         this->arr = n;
+        // TODO: delete old array
     }
 
     this->_length++;
@@ -115,24 +126,9 @@ bool ArrayList<T>::remove(const T &element)
 }
 
 template <typename T>
-size_T ArrayList<T>::length() const
-{
-    return this->_length;
-}
-
-template <typename T>
 size_T ArrayList<T>::capacity() const
 {
     return this->_capacity;
-}
-
-template <typename T>
-void ArrayList<T>::checkIndexRange(size_T index) const
-{
-    if (index < 0 || this->_length <= index)
-    {
-        throw std::out_of_range("index out of range");
-    }
 }
 
 template <typename T>
