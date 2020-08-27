@@ -4,6 +4,8 @@
 #include "ArrayList.cpp"
 #include "LinkedList.hpp"
 #include "LinkedList.cpp"
+#include "DoubleLinkedList.hpp"
+#include "DoubleLinkedList.cpp"
 
 #include <iostream>
 using std::cout;
@@ -64,13 +66,17 @@ void test_ListType()
 
 int main()
 {
-    cout << "ArrayList" << endl;
+    cout << endl << "ArrayList" << endl;
     test_ListType<ArrayList>();
 
-    cout << "LinkedList" << endl;
+    cout << endl << "LinkedList" << endl;
     test_ListType<LinkedList>();
 
+    cout << endl << "DoubleLinkedList" << endl;
+    test_ListType<DoubleLinkedList>();
+
     cout << "Done" << endl;
+
     return 0;
 }
 

@@ -8,7 +8,8 @@ LinkedList<T>::LinkedList(const initializer_list<T> &list) : List<T>(), _start(n
 {
     this->_length = list.size();
 
-    Node<T> *cur = new Node<T>(0, this->_start);
+    this->_start = new Node<T>(0, nullptr);
+    Node<T> *cur = this->_start;
 
     for (auto &x : list)
     {
@@ -16,7 +17,7 @@ LinkedList<T>::LinkedList(const initializer_list<T> &list) : List<T>(), _start(n
         cur = cur->_next;
     }
 
-    this->_start = cur->_next;
+    this->_start = this->_start->_next;
 }
 
 template <typename T>
@@ -24,7 +25,8 @@ LinkedList<T>::LinkedList(const List<T> &list) : List<T>(), _start(nullptr)
 {
     this->_length = list.length();
 
-    Node<T> *cur = new Node<T>(0, this->_start);
+    this->_start = new Node<T>(0, nullptr);
+    Node<T> *cur = this->_start;
 
     for (size_T i = 0; i < this->_length; i++)
     {
@@ -32,7 +34,7 @@ LinkedList<T>::LinkedList(const List<T> &list) : List<T>(), _start(nullptr)
         cur = cur->_next;
     }
 
-    this->_start = cur->_next;
+    this->_start = this->_start->_next;
 }
 
 template <typename T>
@@ -137,15 +139,18 @@ T LinkedList<T>::removeAt(size_T index)
 template <typename T>
 bool LinkedList<T>::remove(const T &element)
 {
-    this->_length--;
-
-    Node<T> *res, *cur;
-    for (cur = this->_start; cur->value != element; cur = cur->_next)
+    Node<T> *prev, *cur;
+    for (cur = this->_start; cur->value != element && cur->_next != nullptr; cur = cur->_next)
     {
-        cur = cur->_next;
+        prev = cur;
     }
-    res = cur;
-    cur = cur->_next;
-    delete res;
+
+    if (cur->value != element)
+    {
+        return false;
+    }
+    prev->_next = cur->_next;
+    delete cur;
+    this->_length--;
     return true;
 }
